@@ -15,7 +15,7 @@
         <!-- /.box-header -->
         <div class="box-body">
             <div class="form-group">
-                <a href="{{ route('admin.medicine.create') }}" class="btn btn-success">Добавить</a>
+                <a href="{{ route('admin.pharmacy.create') }}" class="btn btn-success">Добавить</a>
             </div>
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
@@ -31,11 +31,11 @@
                 @foreach($pharmacies as $pharmacy)
                     <tr>
                         <td>{{ $pharmacy->id }}</td>
-                        <td><a href="{{ route('admin.medicine.show', $pharmacy->id) }}">{{ $pharmacy->title }}</a></td>
+                        <td><a href="{{ route('admin.pharmacy.show', $pharmacy->id) }}">{{ $pharmacy->title }}</a></td>
                         <td>{{ $pharmacy->address }}</td>
                         <td>{{ $pharmacy->owner }}</td>
-                        <td><a href="{{ route('admin.medicine.edit', $pharmacy->id) }}" class="fa fa-pencil"></a>
-                            <form action="{{ route('admin.medicine.delete', $pharmacy->id) }}" method="post">
+                        <td><a href="{{ route('admin.pharmacy.edit', $pharmacy->id) }}" class="fa fa-pencil"></a>
+                            <form action="{{ route('admin.pharmacy.delete', $pharmacy->id) }}" method="post">
                                 @csrf
                                 @method('delete')
 

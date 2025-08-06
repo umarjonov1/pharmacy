@@ -9,7 +9,7 @@
 
 @section('content')
     <div class="box">
-        <form action="{{ route('admin.medicine.update', $pharmacy->id) }}" method="post">
+        <form action="{{ route('admin.pharmacy.update', $pharmacy->id) }}" method="post">
             @csrf
             @method('patch')
 
@@ -32,6 +32,18 @@
                         <label for="exampleInputEmail1">Owner Pharmacy</label>
                         <input value="{{ $pharmacy->owner }}" name="owner" type="text" class="form-control" id="exampleInputEmail1">
                     </div>
+                   <div class="col-md-3">
+                       <h3 class="title">Location of PHARMACY</h3>
+
+                       <div class="form-group">
+                           <label for="lat">Enter latitude </label>
+                           <input name="lat" type="number" class="form-control" step="any" value="{{ $pharmacy->lat ?? old('lat') }}">
+                       </div>
+                       <div class="form-group">
+                           <label for="lat">Enter longitude </label>
+                           <input name="lng" type="number" class="form-control" step="any" value="{{ $pharmacy->lng ?? old('lng') }}">
+                       </div>
+                   </div>
                 </div>
             </div>
             <div class="box-footer">

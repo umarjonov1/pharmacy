@@ -19,7 +19,7 @@
     @endif
 
     <div class="box">
-        <form action="{{ route('admin.medicine.store') }}" method="post">
+        <form action="{{ route('admin.pharmacy.store') }}" method="post">
             @csrf
 
 
@@ -50,6 +50,18 @@
                         @error('owner')
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
+                    </div>
+                    <div class="col-md-3">
+                        <h3 class="title">Location of PHARMACY</h3>
+
+                        <div class="form-group">
+                            <label for="lat">Enter latitude </label>
+                            <input name="lat" type="number" class="form-control" step="any" value="{{ old('lat') }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="lat">Enter longitude </label>
+                            <input name="lng" type="number" class="form-control" step="any" value="{{ old('lng') }}">
+                        </div>
                     </div>
                 </div>
             </div>

@@ -27,12 +27,14 @@ class PharmacyController extends Controller
             'title' => 'required|string|max:255',
             'address' => 'required|string',
             'owner' => 'required|string',
+            'lat' => 'numeric',
+            'lng' => 'numeric',
         ]);
         $pharmacy = new Pharmacy();
         $pharmacy->fill($validated);
         $pharmacy->save();
 
-        return redirect()->route('admin.medicine.index');
+        return redirect()->route('admin.pharmacy.index');
     }
 
     public function show(\App\Pharmacy $pharmacy) {
@@ -52,6 +54,8 @@ class PharmacyController extends Controller
             'title' => 'required|string|max:255',
             'address' => 'required|string',
             'owner' => 'required|string',
+            'lat' => 'numeric',
+            'lng' => 'numeric',
         ]);
         $pharmacy->update($validated);
 
@@ -62,6 +66,6 @@ class PharmacyController extends Controller
     {
         $pharmacy->delete();
 
-        return redirect()->route('admin.medicine.index');
+        return redirect()->route('admin.pharmacy.index');
     }
 }

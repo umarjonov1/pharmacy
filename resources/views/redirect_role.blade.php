@@ -86,7 +86,9 @@
                 <div class="col-sm-8">
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
-                            @if ($role == 1)
+                            @if ($role == 0)
+                                <li><a href="{{ route('pages.index') }}">Go shopping</a></li>
+                            @elseif ($role == 1)
                                 <li><a href="{{ route('admin.index') }}">Admin panel</a></li>
                             @elseif ($role == 2)
                                 <li><a href="{{ route('pharmacy.index') }}">Pharmacy panel</a></li>

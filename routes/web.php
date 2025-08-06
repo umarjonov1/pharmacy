@@ -13,7 +13,7 @@
 
 // main page for usage (MAIN page)
 Route::group(['middleware' => ['auth', 'role:0,1']], function () {
-    Route::get('/', 'Pages\IndexController')->name('pages.index');
+    Route::get('/', 'Pages\IndexController@index')->name('pages.index');
     Route::get('/pharmacyMedicine/{pharmacy}', 'Pages\IndexController@pharmacyMedicine')->name('pages.pharmacyMedicine');
     Route::get('/categoryMedicine/{category}', 'Pages\IndexController@categoryMedicine')->name('pages.categoryMedicine');
 
@@ -44,15 +44,15 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'role:1'], 'prefi
         Route::get('/{user}', 'UserController@show')->name('admin.user.show');            // показать
     });
 
-    Route::group(['prefix' => '/medicine'], function () {
+    Route::group(['prefix' => '/pharmacy'], function () {
 
-        Route::get('/', 'PharmacyController@index')->name('admin.medicine.index');                // список
-        Route::get('/create', 'PharmacyController@create')->name('admin.medicine.create');        // форма создания
-        Route::post('/store', 'PharmacyController@store')->name('admin.medicine.store');          // сохранить нового
-        Route::get('/{medicine}/edit', 'PharmacyController@edit')->name('admin.medicine.edit');       // форма редактирования
-        Route::patch('/update/{medicine}', 'PharmacyController@update')->name('admin.medicine.update'); // обновление
-        Route::delete('/{medicine}/delete', 'PharmacyController@delete')->name('admin.medicine.delete'); // удалить
-        Route::get('/{medicine}', 'PharmacyController@show')->name('admin.medicine.show');            // показать
+        Route::get('/', 'PharmacyController@index')->name('admin.pharmacy.index');                // список
+        Route::get('/create', 'PharmacyController@create')->name('admin.pharmacy.create');        // форма создания
+        Route::post('/store', 'PharmacyController@store')->name('admin.pharmacy.store');          // сохранить нового
+        Route::get('/{pharmacy}/edit', 'PharmacyController@edit')->name('admin.pharmacy.edit');       // форма редактирования
+        Route::patch('/update/{pharmacy}', 'PharmacyController@update')->name('admin.pharmacy.update'); // обновление
+        Route::delete('/{pharmacy}/delete', 'PharmacyController@delete')->name('admin.pharmacy.delete'); // удалить
+        Route::get('/{pharmacy}', 'PharmacyController@show')->name('admin.pharmacy.show');            // показать
     });
 });
 
@@ -115,6 +115,6 @@ Route::group(['namespace' => 'Courier', 'prefix' => '/courier', 'middleware' => 
 
 Auth::routes();
 
-Route::get('/', 'HomeController@redirect_role')->name('redirect-role');
+Route::get('/redirect_role', 'HomeController@redirect_role')->name('redirect-role');
 Route::get('/home', 'HomeController@index')->name('auth');
 Route::get('/addcart', 'Pages\IndexController@addcart')->name('addcart');

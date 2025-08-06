@@ -25,7 +25,10 @@
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <![endif]-->'
+
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Site wrapper -->
@@ -219,8 +222,8 @@
                         <i class="fa fa-dashboard"></i> <span>Users</span>
                     </a>
                 </li>
-                <li><a href="{{ route('admin.medicine.index') }}"><i class="fa fa-sticky-note-o"></i> <span>Pharmacies</span></a></li>
-                <li><a href="/public/extensions/#"><i class="fa fa-list-ul"></i> <span>Comments</span></a></li>
+                <li><a href="{{ route('admin.pharmacy.index') }}"><i class="fa fa-sticky-note-o"></i> <span>Pharmacies</span></a></li>
+                <li><a href="#"><i class="fa fa-list-ul"></i> <span>Comments</span></a></li>
 
             </ul>
         </section>
