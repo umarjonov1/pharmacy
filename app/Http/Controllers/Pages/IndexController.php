@@ -15,8 +15,9 @@ class IndexController extends Controller
         $pharmacies = Pharmacy::all();
         $medicines = Medicine::paginate(16);
         $categories = Category::all();
+        $locations = Pharmacy::select('lat', 'lng')->get();
 
-        return view('pages.index', compact('pharmacies', 'medicines', 'categories'));
+        return view('pages.index', compact('pharmacies', 'medicines', 'categories', 'locations'));
     }
 
     public function addcart(){

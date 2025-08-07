@@ -27,7 +27,9 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->'
 
-    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+{{--    Yandex Map--}}
+{{--    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>--}}
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=8535515a-98b0-4745-9fcb-ff64a270a54d&lang=ru_RU" type="text/javascript"></script>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

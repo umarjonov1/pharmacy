@@ -13,7 +13,7 @@
                         <div class="video-gallery text-center">
                             <a href="/public/extensions#">
                                 <div class="iframe-img">
-                                    <img src="/public/extensions/images/home/iframe1.png" alt="" />
+                                    <img src="/public/extensions/images/home/iframe1.png" alt=""/>
                                 </div>
                                 <div class="overlay-icon">
                                     <i class="fa fa-play-circle-o"></i>
@@ -28,7 +28,7 @@
                         <div class="video-gallery text-center">
                             <a href="/public/extensions#">
                                 <div class="iframe-img">
-                                    <img src="/public/extensions/images/home/iframe2.png" alt="" />
+                                    <img src="/public/extensions/images/home/iframe2.png" alt=""/>
                                 </div>
                                 <div class="overlay-icon">
                                     <i class="fa fa-play-circle-o"></i>
@@ -43,7 +43,7 @@
                         <div class="video-gallery text-center">
                             <a href="/public/extensions#">
                                 <div class="iframe-img">
-                                    <img src="/public/extensions/images/home/iframe3.png" alt="" />
+                                    <img src="/public/extensions/images/home/iframe3.png" alt=""/>
                                 </div>
                                 <div class="overlay-icon">
                                     <i class="fa fa-play-circle-o"></i>
@@ -58,7 +58,7 @@
                         <div class="video-gallery text-center">
                             <a href="/public/extensions#">
                                 <div class="iframe-img">
-                                    <img src="/public/extensions/images/home/iframe4.png" alt="" />
+                                    <img src="/public/extensions/images/home/iframe4.png" alt=""/>
                                 </div>
                                 <div class="overlay-icon">
                                     <i class="fa fa-play-circle-o"></i>
@@ -70,10 +70,12 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="address">
-                        <img src="/public/extensions/images/home/map.png" alt="" />
-                        <p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
-                    </div>
+                    {{--                    <div class="address">--}}
+                    {{--                        <img src="/public/extensions/images/home/map.png" alt="" />--}}
+                    {{--                        <p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>--}}
+                    {{--                    </div>--}}
+                    <div id="map" style="width: 100%;height: 250px;"></div>
+
                 </div>
             </div>
         </div>
@@ -134,9 +136,10 @@
                     <div class="single-widget">
                         <h2>About Shopper</h2>
                         <form action="#" class="searchform">
-                            <input type="text" placeholder="Your email address" />
-                            <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i></button>
-                            <p>Get the most recent updates from <br />our site and be updated your self...</p>
+                            <input type="text" placeholder="Your email address"/>
+                            <button type="submit" class="btn btn-default"><i class="fa fa-arrow-circle-o-right"></i>
+                            </button>
+                            <p>Get the most recent updates from <br/>our site and be updated your self...</p>
                         </form>
                     </div>
                 </div>
@@ -149,7 +152,9 @@
         <div class="container">
             <div class="row">
                 <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                <p class="pull-right">Designed by <span><a target="_blank" href="/public/extensions/http://www.themeum.com">Themeum</a></span></p>
+                <p class="pull-right">Designed by <span><a target="_blank"
+                                                           href="/public/extensions/http://www.themeum.com">Themeum</a></span>
+                </p>
             </div>
         </div>
     </div>
@@ -159,7 +164,8 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
                 <h4 class="modal-title" id="myModalLabel">Modal title</h4>
             </div>
             <div class="modal-body">
@@ -172,3 +178,34 @@
         </div>
     </div>
 </div>
+
+<script>
+    ymaps.ready(function () {
+        const myMap = new ymaps.Map("map", {
+            center: [41.311081, 69.240562], // Центр — Ташкент
+            zoom: 12
+        });
+
+        // Массив меток: [широта, долгота, текст]
+        // const places = [
+        //     [41.311081, 69.240562, 'Центр Ташкента'],
+        //     [41.3275, 69.2817, 'Чорсу'],
+        //     [41.2995, 69.2401, 'Амир Темур'],
+        //     [41.3365, 69.2840, 'Сергелийский район'],
+        //     [41.2646, 69.2163, 'Юнусабад']
+        // ];
+
+        const places = @json($locations);
+        // Проходимся по массиву и создаём метки
+        places.forEach(function (place) {
+            const placemark = new ymaps.Placemark([place.lat, place.lng], {
+                hintContent: 'Метка',
+                balloonContent: place[2]
+            });
+
+            myMap.geoObjects.add(placemark);
+        });
+    });
+</script>
+
+

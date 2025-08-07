@@ -25,6 +25,12 @@
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/public/extensions/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/public/extensions/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/public/extensions/images/ico/apple-touch-icon-57-precomposed.png">
+
+{{--    yandex map --}}
+{{--    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>--}}
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=8535515a-98b0-4745-9fcb-ff64a270a54d&lang=ru_RU" type="text/javascript"></script>
+
+
 </head><!--/head-->
 
 <body>

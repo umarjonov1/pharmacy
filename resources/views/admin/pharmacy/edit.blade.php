@@ -40,10 +40,12 @@
                            <input name="lat" type="number" class="form-control" step="any" value="{{ $pharmacy->lat ?? old('lat') }}">
                        </div>
                        <div class="form-group">
-                           <label for="lat">Enter longitude </label>
+                           <label for="lng">Enter longitude </label>
                            <input name="lng" type="number" class="form-control" step="any" value="{{ $pharmacy->lng ?? old('lng') }}">
                        </div>
                    </div>
+                    <div id="map" style="width: 100%; height: 400px;"></div>
+
                 </div>
             </div>
             <div class="box-footer">
@@ -52,5 +54,42 @@
             </div>
         </form>
     </div>
+
+    <script>
+        var lat = parseFloat({{ $pharmacy->lat ?? '41.311081' }});
+        var lng = parseFloat({{ $pharmacy->lng ?? '69.240562' }});
+        var name = @json($pharmacy->title ?? 'Аптека');
+
+        ymaps.ready(function () {
+            var map = new ymaps.Map("map", {
+                center: [lat, lng],
+                zoom: 17
+            });
+
+            var placemark = new ymaps.Placemark([lat, lng], {
+                balloonContent: name
+            }, {
+                draggable: true
+            });
+
+            map.geoObjects.add(placemark);
+
+            placemark.events.add('dragend', function () {
+                var coords = placemark.geometry.getCoordinates();
+                document.querySelector('input[name="lat"]').value = coords[0].toFixed(8);
+                document.querySelector('input[name="lng"]').value = coords[1].toFixed(8);
+            });
+
+            map.events.add('click', function (e) {
+                var coords = e.get('coords');
+                placemark.geometry.setCoordinates(coords);
+                document.querySelector('input[name="lat"]').value = coords[0].toFixed(8);
+                document.querySelector('input[name="lng"]').value = coords[1].toFixed(8);
+            });
+        });
+    </script>
+
+
+
 
 @endsection
