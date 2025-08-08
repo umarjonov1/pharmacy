@@ -1,3 +1,4 @@
+<script src="https://api-maps.yandex.ru/2.1/?apikey=8535515a-98b0-4745-9fcb-ff64a270a54d&lang=ru_RU" type="text/javascript"></script>
 <footer id="footer"><!--Footer-->
     <div class="footer-top">
         <div class="container">
@@ -185,17 +186,7 @@
             center: [41.311081, 69.240562], // Центр — Ташкент
             zoom: 12
         });
-
-        // Массив меток: [широта, долгота, текст]
-        // const places = [
-        //     [41.311081, 69.240562, 'Центр Ташкента'],
-        //     [41.3275, 69.2817, 'Чорсу'],
-        //     [41.2995, 69.2401, 'Амир Темур'],
-        //     [41.3365, 69.2840, 'Сергелийский район'],
-        //     [41.2646, 69.2163, 'Юнусабад']
-        // ];
-
-        const places = @json($locations);
+        const places = @json($locations ?? []);
         // Проходимся по массиву и создаём метки
         places.forEach(function (place) {
             const placemark = new ymaps.Placemark([place.lat, place.lng], {
