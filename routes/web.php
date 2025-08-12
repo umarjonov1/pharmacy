@@ -16,6 +16,9 @@ Route::group(['middleware' => ['auth', 'role:0,1']], function () {
     Route::get('/', 'Pages\IndexController@index')->name('pages.index');
     Route::get('/pharmacyMedicine/{pharmacy}', 'Pages\IndexController@pharmacyMedicine')->name('pages.pharmacyMedicine');
     Route::get('/categoryMedicine/{category}', 'Pages\IndexController@categoryMedicine')->name('pages.categoryMedicine');
+    Route::get('/{medicine}/productDetail', 'Pages\IndexController@productDetails')->name('pages.productDetails');
+    Route::get('/medicineSearch', 'Pages\IndexController@medicineSearch')->name('pages.medicineSearch');
+
 
     Route::group(['namespace' => 'Cart', 'prefix' => '/cart'], function () {
         Route::get('/index', 'IndexController@index')->name('cart.index');
@@ -26,6 +29,8 @@ Route::group(['middleware' => ['auth', 'role:0,1']], function () {
     });
 
     Route::get('/order', 'Order\IndexController@add')->name('order.add');
+
+    Route::post('/addComment/{medicine}', 'Comment\IndexController@store')->name('comment.add');
 });
 
 

@@ -1,6 +1,8 @@
 <?php
-    use App\User;
-    $user = User::find(Auth::id());
+
+use App\User;
+
+$user = User::find(Auth::id());
 ?>
 <header id="header"><!--header-->
     <div class="header_top"><!--header_top-->
@@ -34,7 +36,8 @@
             <div class="row">
                 <div class="col-sm-4">
                     <div class="logo pull-left">
-                        <a href="/public/extensions/index.html"><img src="/public/extensions/images/home/logo.png" alt="" /></a>
+                        <a href="/public/extensions/index.html"><img src="/public/extensions/images/home/logo.png"
+                                                                     alt=""/></a>
                     </div>
                     <div class="btn-group pull-right">
                         <div class="btn-group">
@@ -64,11 +67,12 @@
                     <div class="shop-menu pull-right">
                         <ul class="nav navbar-nav">
                             @if ($user && $user->role)
-                            <li><a href="{{ route('admin.index') }}"><i class="fa fa-user"></i>Admin panel</a></li>
+                                <li><a href="{{ route('admin.index') }}"><i class="fa fa-user"></i>Admin panel</a></li>
                             @endif
                             <li><a href="/public/extensions#"><i class="fa fa-user"></i> Account</a></li>
                             <li><a href="/public/extensions#"><i class="fa fa-star"></i> Wishlist</a></li>
-                            <li><a href="/public/extensions/checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                            <li><a href="/public/extensions/checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a>
+                            </li>
                             <li><a href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"></i>Cart</a></li>
                             <li><a href="{{ route('auth') }}"><i class="fa fa-lock"></i> Login</a></li>
                         </ul>
@@ -83,7 +87,8 @@
             <div class="row">
                 <div class="col-sm-9">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target=".navbar-collapse">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -95,11 +100,11 @@
                             <li><a href="/" class="active">Home</a></li>
                             <li class="dropdown"><a href="/public/extensions#">Shop<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
-{{--                                    <li><a href="/public/extensions/shop.html">Products</a></li>--}}
-{{--                                    <li><a href="/public/extensions/product-details.html">Product Details</a></li>--}}
-{{--                                    <li><a href="/public/extensions/checkout.html">Checkout</a></li>--}}
+                                    {{--                                    <li><a href="/public/extensions/shop.html">Products</a></li>--}}
+                                    {{--                                    <li><a href="/public/extensions/product-details.html">Product Details</a></li>--}}
+                                    {{--                                    <li><a href="/public/extensions/checkout.html">Checkout</a></li>--}}
                                     <li><a href="{{ route('cart.index') }}">Cart</a></li>
-{{--                                    <li><a href="{{ route('login') }}">Login</a></li>--}}
+                                    {{--                                    <li><a href="{{ route('login') }}">Login</a></li>--}}
                                 </ul>
                             </li>
                             <li class="dropdown"><a href="/public/extensions#">Blog<i class="fa fa-angle-down"></i></a>
@@ -115,10 +120,14 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="search_box pull-right">
-                        <input type="text" placeholder="Search"/>
+                        <form id="medicine-search-form" action="{{ route('pages.medicineSearch') }}" method="get" autocomplete="off">
+                            <input type="text" id="medicine-search" name="title" placeholder="Search"/>
+                        </form>
+                        <div id="medicine-results"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div><!--/header-bottom-->
 </header><!--/header-->
+

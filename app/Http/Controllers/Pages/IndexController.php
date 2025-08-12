@@ -26,10 +26,9 @@ class IndexController extends Controller
         return view("pages.cart");
     }
 
+
     public function pharmacyMedicine(Pharmacy $pharmacy)
     {
-        $pharmacies = Pharmacy::all();
-        $categories = Category::all();
 
         $medicines = Medicine::where('pharmacy_id', $pharmacy->id)->paginate(12);
 
@@ -38,12 +37,41 @@ class IndexController extends Controller
 
     public function categoryMedicine(Category $category)
     {
-        $pharmacies = Pharmacy::all();
-        $categories = Category::all();
 
         $medicines = Medicine::where('category_id', $category->id)->paginate(12);
 
         return view('pages.categoryMedicine', compact('pharmacies', 'medicines', 'categories'));
     }
+
+    public function productDetails(Medicine $medicine)
+    {
+
+
+        return view('pages.productDetail', compact('medicine', 'pharmacies', 'categories'));
+    }
+
+    // Pages/IndexController.php
+    public function medicineSearch(Request $request)
+    {
+        $q = trim($request->get('title', ''));
+
+        $query = Medicine::query();
+
+        if ($q !== '') {
+            $query->where('title', 'like', '%'.$q.'%');
+        }
+
+        $medicines = $query->select('id', 'title', 'price')->limit(20)->get();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'data'  => $medicines,
+                'count' => $medicines->count(),
+            ]);
+        }
+
+        return view('pages.searchMedicine', compact('medicines', 'q'));
+    }
+
 
 }

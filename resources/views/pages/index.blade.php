@@ -89,7 +89,7 @@
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img src="/public/extensions/images/home/gallery4.jpg" alt=""/>
+                                        <a href="{{ route('pages.productDetails', $medicine->id) }}"><img src="/public/extensions/images/home/gallery4.jpg" alt=""/></a>
                                         <h2>${{ $medicine->price }}</h2>
                                         <p>{{ $medicine->title }}</p>
 {{--                                        <a href="" data-url="{{ route("cart.add", $medicine->id) }}" data-id="{{ $medicine->id }}"  class="btn btn-default add-to-cart"><i--}}

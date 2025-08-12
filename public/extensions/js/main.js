@@ -160,6 +160,79 @@ $(document).ready(function () {
     });
 });
 
+// search for medicine
+$(function () {
+    var t;
+
+    function renderLoading() {
+        $('#medicine-results').html('Qidirilmoqda…');
+    }
+
+    function renderEmpty() {
+        $('#medicine-results').html('Hech narsa topilmadi');
+    }
+
+    function renderError() {
+        $('#medicine-results').html('Xatolik yuz berdi');
+    }
+
+    function renderItems(items) {
+        var base = "{{ url('/product') }}"; // <— починили
+        var html = $.map(items, function (m) {
+            return '<div class="suggest-item" style="padding:6px 8px;border:1px solid #eee;border-radius:8px;margin:4px 0;">'
+                + '<a href="' + base + '/' + m.id + '">' + m.title + '</a> — $' + (m.price || 0)
+                + '</div>';
+        }).join('');
+        $('#medicine-results').html(html);
+    }
+
+    function doSearch(q) {
+        q = $.trim(q || '');
+        if (!q) {
+            $('#medicine-results').empty();
+            return;
+        }
+
+        renderLoading();
+        $.ajax({
+            url: "{{ route('pages.medicineSearch') }}",
+            data: {title: q},
+            headers: {'X-Requested-With': 'XMLHttpRequest'},
+            success: function (resp) {
+                if (!resp.count) {
+                    renderEmpty();
+                    return;
+                }
+                renderItems(resp.data);
+            },
+            error: renderError
+        });
+    }
+
+    // Ввод с дебаунсом
+    $('#medicine-search').on('input', function () {
+        clearTimeout(t);
+        var val = this.value;
+        t = setTimeout(function () {
+            doSearch(val);
+        }, 300);
+    });
+
+    // Enter — немедленный поиск
+    $('#medicine-search').on('keydown', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            e.preventDefault();         // не сабмитим форму
+            clearTimeout(t);
+            doSearch(this.value);
+        }
+    });
+
+    // На всякий случай — полностью гасим сабмит формы (если нажали Enter в других браузерных кейсах)
+    $('#medicine-search-form').on('submit', function (e) {
+        e.preventDefault();
+        doSearch($('#medicine-search').val());
+    });
+});
 
 
 

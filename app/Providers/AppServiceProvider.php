@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Category;
 use App\Pharmacy;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\View;
@@ -32,16 +33,28 @@ class AppServiceProvider extends ServiceProvider
                     ->get()
                     ->map(function ($item) {
                         return [
-                            'lat'   => (float) $item->lat,
-                            'lng'   => (float) $item->lng,
-                            'title' => (string) $item->title,
+                            'lat' => (float)$item->lat,
+                            'lng' => (float)$item->lng,
+                            'title' => (string)$item->title,
                         ];
                     })
                     ->values()
                     ->toArray();
             });
 
-            $view->with('locations', $locations);
+            $pharmacies = Cache::remember('pharmacies_for_view', 600, function () {
+                return Pharmacy::all();
+            });
+
+            $categories = Cache::remember('categories_for_view', 600, function () {
+                return Category::all();
+            });
+
+            $view->with([
+                'locations'  => $locations,
+                'pharmacies' => $pharmacies,
+                'categories' => $categories,
+            ]);
         });
     }
 }

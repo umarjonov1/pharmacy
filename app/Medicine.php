@@ -19,4 +19,9 @@ class Medicine extends Model
     {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->oldest();
+    }
 }

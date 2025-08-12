@@ -190,7 +190,7 @@
         // Проходимся по массиву и создаём метки
         places.forEach(function (place) {
             const placemark = new ymaps.Placemark([place.lat, place.lng], {
-                hintContent: 'Метка',
+                hintContent: place.title,
                 balloonContent: place[2]
             });
 
