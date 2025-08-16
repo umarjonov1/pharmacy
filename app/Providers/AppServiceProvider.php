@@ -49,11 +49,14 @@ class AppServiceProvider extends ServiceProvider
             $categories = Cache::remember('categories_for_view', 600, function () {
                 return Category::all();
             });
+            $ids = array_values(array_unique(array_map('intval', (array)session('wishlist', []))));
 
             $view->with([
-                'locations'  => $locations,
+                'locations' => $locations,
                 'pharmacies' => $pharmacies,
                 'categories' => $categories,
+                'wishlist' => $ids,
+                'wishlistCount' => count($ids),
             ]);
         });
     }

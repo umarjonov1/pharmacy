@@ -31,12 +31,18 @@ Route::group(['middleware' => ['auth', 'role:0,1']], function () {
     Route::get('/order', 'Order\IndexController@add')->name('order.add');
 
     Route::post('/addComment/{medicine}', 'Comment\IndexController@store')->name('comment.add');
+
+    // wishlist
+    Route::group(['namespace' => 'Wishlist', 'prefix' => '/wishlist'], function () {
+        Route::get('/', 'IndexController@index')->name('wishlist.index');
+        Route::post('/{medicine}/toggle', 'IndexController@toggle')->name('wishlist.toggle');
+    });
 });
 
 
 // admin panel
 Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'role:1'], 'prefix' => '/admin'], function () {
-    Route::get('/', 'IndexController')->name('admin.index');
+    Route::get('/', 'IndexController@index')->name('admin.index');
 
     Route::group(['prefix' => '/user'], function () {
 
@@ -59,6 +65,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth', 'role:1'], 'prefi
         Route::delete('/{pharmacy}/delete', 'PharmacyController@delete')->name('admin.pharmacy.delete'); // удалить
         Route::get('/{pharmacy}', 'PharmacyController@show')->name('admin.pharmacy.show');            // показать
     });
+
+    Route::get('/comments', 'IndexController@comment')->name('admin.comment.index');
+    Route::delete('/comment/{comment}/delete', [\App\Http\Controllers\Comment\IndexController::class, 'destroy'])->name('comment.delete');
 });
 
 // Pharmacist
@@ -101,22 +110,6 @@ Route::group(['namespace' => 'Courier', 'prefix' => '/courier', 'middleware' => 
         Route::get('/{order}', 'OrderController@show')->name('courier.order.show');
     });
 });
-//Route::group(['middleware' => ['auth', 'role:0']], function () {
-//    Route::get('/home', 'UserController@index');
-//});
-//
-//Route::group(['middleware' => ['auth', 'role:1']], function () {
-//    Route::get('/admin', 'AdminController@index');
-//});
-//
-//Route::group(['middleware' => ['auth', 'role:2']], function () {
-//    Route::get('/medicine', 'PharmacyController@index');
-//});
-//
-//Route::group(['middleware' => ['auth', 'role:3']], function () {
-//    Route::get('/courier', 'CourierController@index');
-//});
-
 
 Auth::routes();
 

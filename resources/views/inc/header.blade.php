@@ -69,9 +69,18 @@ $user = User::find(Auth::id());
                             @if ($user && $user->role)
                                 <li><a href="{{ route('admin.index') }}"><i class="fa fa-user"></i>Admin panel</a></li>
                             @endif
-                            <li><a href="/public/extensions#"><i class="fa fa-user"></i> Account</a></li>
-                            <li><a href="/public/extensions#"><i class="fa fa-star"></i> Wishlist</a></li>
-                            <li><a href="/public/extensions/checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a>
+                            <li><a href="/"><i class="fa fa-user"></i> Account</a></li>
+                            <li>
+                                <a href="{{ route('wishlist.index') }}">
+                                    <i class="fa fa-star"></i> Wishlist
+                                    <span id="wishlist-count" class="wishlist-badge"
+                                          @if(($wishlistCount ?? 0)===0) style="display:none" @endif>
+      {{ $wishlistCount ?? 0 }}
+    </span>
+                                </a>
+                            </li>
+                            {{--                            <li><a href="{{ route('wishlist.index') }}"><i class="fa fa-star"></i> Wishlist</a></li>--}}
+                            <li><a href=""><i class="fa fa-crosshairs"></i> Checkout</a>
                             </li>
                             <li><a href="{{ route('cart.index') }}"><i class="fa fa-shopping-cart"></i>Cart</a></li>
                             <li><a href="{{ route('auth') }}"><i class="fa fa-lock"></i> Login</a></li>
@@ -120,7 +129,8 @@ $user = User::find(Auth::id());
                 </div>
                 <div class="col-sm-3">
                     <div class="search_box pull-right">
-                        <form id="medicine-search-form" action="{{ route('pages.medicineSearch') }}" method="get" autocomplete="off">
+                        <form id="medicine-search-form" action="{{ route('pages.medicineSearch') }}" method="get"
+                              autocomplete="off">
                             <input type="text" id="medicine-search" name="title" placeholder="Search"/>
                         </form>
                         <div id="medicine-results"></div>

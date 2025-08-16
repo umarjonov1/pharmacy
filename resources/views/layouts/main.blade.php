@@ -33,6 +33,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/tablesort.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tablesort/5.2.1/sorts/tablesort.number.min.js"></script>
 
+{{--    wishlist--}}
+    <script>window.__WISHLIST_IDS__ = @json($wishlistIds ?? []);</script>
+    <style>
+        .wishlist-badge{display:inline-block;min-width:18px;padding:2px 6px;font-size:12px;line-height:1;border-radius:10px;background:#e60023;color:#fff;margin-left:6px;font-weight:600}
+        .wishlist-toggle.is-in .label{font-weight:600}
+    </style>
 </head><!--/head-->
 
 <body>

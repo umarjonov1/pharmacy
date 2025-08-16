@@ -1,36 +1,8 @@
 @extends('layouts.admin')
-@push('styles')
-    <style>
-        /* показываем, что заголовки кликабельны */
-        #example1 thead th:not([data-sort-method="none"]) {
-            cursor: pointer;
-            position: relative;
-            user-select: none;
-            padding-right: 18px;
-        }
-        /* стрелка по умолчанию (даже до клика) */
-        #example1 thead th:not([data-sort-method="none"])::after {
-            content: "⇅";
-            position: absolute; right: 8px; top: 50%;
-            transform: translateY(-52%); font-size: 12px; opacity: .35;
-        }
-        /* по возрастанию ↑ */
-        #example1 thead th.sort-up::after {
-            content: "▲"; opacity: .8;
-        }
-        /* по убыванию ↓ */
-        #example1 thead th.sort-down::after {
-            content: "▼"; opacity: .8;
-        }
-        /* подсветка активного столбца */
-        #example1 thead th.sort-up,
-        #example1 thead th.sort-down { color: #0d6efd; }
-        #example1 td.active-col, #example1 th.active-col { background: #f7faff; }
-    </style>
-@endpush
+
 @section('header')
     <h1>
-        Blank page
+        Comments
         <small>it all starts here</small>
     </h1>
 @endsection
@@ -42,36 +14,37 @@
         </div>
         <!-- /.box-header -->
         <div class="box-body">
-            <div class="form-group">
-                <a href="{{ route('admin.user.create') }}" class="btn btn-success">Добавить</a>
-            </div>
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th data-sort-method="number">ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
+                    <th>User name</th>
+                    <th>Comment</th>
+                    <th>Medicine name</th>
+                    <th>Created at</th>
                     <th data-sort-method="none">Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($users as $user)
+                @foreach($comments as $comment)
                     <tr>
-                        <td>{{ $user->id }}</td>
+                        <td>{{ $comment->id }}</td>
                         <td>
-                            <a href="{{ route('admin.user.show', $user->id) }}">{{ $user->name }}</a>
+                            {{ $comment->user->name }}
                         </td>
-                        <td>{{ $user->email }}</td>
-                        <td>{{ $user->roleTitle }}</td>
+                        <td>{{ $comment->comment }}</td>
+                        <td>{{ $comment->medicine->title }}</td>
+                        <td>{{ $comment->created_at }}</td>
                         <td>
-                            <a href="{{ route('admin.user.edit', $user->id) }}" class="fa fa-pencil"></a>
-                            <form action="{{ route('admin.user.delete', $user->id) }}" method="post" style="display:inline" style="display:inline"
-                                  onsubmit="return confirm('Do you really want delete?');">>
+                            <form action="{{ route('comment.delete', $comment->id) }}"
+                                  method="post"
+                                  style="display:inline"
+                                  onsubmit="return confirm('Do you really want delete?');">
                                 @csrf
                                 @method('delete')
                                 <button class="btn btn-danger fa fa-remove"></button>
                             </form>
+
                         </td> <!-- ← ВАЖНО: закрываем ячейку -->
                     </tr> <!-- ← ВАЖНО: закрываем строку -->
                 @endforeach

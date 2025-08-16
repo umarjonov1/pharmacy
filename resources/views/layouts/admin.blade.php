@@ -230,7 +230,7 @@
                     </a>
                 </li>
                 <li><a href="{{ route('admin.pharmacy.index') }}"><i class="fa fa-sticky-note-o"></i> <span>Pharmacies</span></a></li>
-                <li><a href="#"><i class="fa fa-list-ul"></i> <span>Comments</span></a></li>
+                <li><a href="{{ route('admin.comment.index') }}"><i class="fa fa-list-ul"></i> <span>Comments</span></a></li>
 
             </ul>
         </section>

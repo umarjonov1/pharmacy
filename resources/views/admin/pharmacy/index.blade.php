@@ -35,7 +35,9 @@
                         <td>{{ $pharmacy->address }}</td>
                         <td>{{ $pharmacy->owner }}</td>
                         <td><a href="{{ route('admin.pharmacy.edit', $pharmacy->id) }}" class="fa fa-pencil"></a>
-                            <form action="{{ route('admin.pharmacy.delete', $pharmacy->id) }}" method="post">
+                            <form action="{{ route('admin.pharmacy.delete', $pharmacy->id) }}" method="post"
+                                  style="display:inline"
+                                  onsubmit="return confirm('Do you really want delete?');">>
                                 @csrf
                                 @method('delete')
 

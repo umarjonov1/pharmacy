@@ -235,4 +235,137 @@ $(function () {
 });
 
 
+// adding to medicine to wishlist
+(function () {
+    const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+    const badge = document.getElementById('wishlist-count');
+
+    function setBadge(count) {
+        if (!badge) return;
+        if (count > 0) {
+            badge.textContent = String(count);
+            badge.style.display = '';
+        } else {
+            badge.textContent = '';
+            badge.style.display = 'none';
+        }
+    }
+
+    function renderButton(el, isIn) {
+        el.classList.toggle('is-in', isIn);
+        el.setAttribute('aria-pressed', isIn ? 'true' : 'false');
+        const label = el.querySelector('.label');
+        if (label) label.textContent = isIn ? 'В избранном' : 'Add to wishlist';
+    }
+
+    function updateAllButtonsForId(id, isIn) {
+        document.querySelectorAll('.wishlist-toggle[data-id="' + id + '"]')
+            .forEach(el => renderButton(el, isIn));
+    }
+
+    function removeWishlistRow(id) {
+        // Удаляем все строки с таким товаром
+        document.querySelectorAll('[data-wishlist-row][data-id="' + id + '"]')
+            .forEach(el => el.remove());
+
+        // Если строк не осталось — показываем "пусто"
+        const list = document.getElementById('wishlist-list');
+        const empty = document.getElementById('wishlist-empty');
+        if (list && !list.querySelector('[data-wishlist-row]') && empty) {
+            empty.style.display = '';
+        }
+    }
+
+    document.addEventListener('click', async (e) => {
+        const btn = e.target.closest('.wishlist-toggle');
+        if (!btn) return;
+
+        e.preventDefault();
+
+        if (btn.dataset.loading === '1') return;
+        btn.dataset.loading = '1';
+
+        const url = btn.dataset.url;
+        if (!url) {
+            delete btn.dataset.loading;
+            return;
+        }
+
+        function checkEmpty(){
+            const list  = document.getElementById('wishlist-list');
+            const empty = document.getElementById('wishlist-empty');
+            if (!list || !empty) return;
+            if (!list.querySelector('[data-wishlist-row]')) {
+                empty.style.display = '';
+            }
+        }
+
+        function removeWishlistRow(id){
+            const rows = document.querySelectorAll('[data-wishlist-row][data-id="'+id+'"]');
+            rows.forEach((row) => {
+                // запускаем fade-out
+                row.classList.add('is-removing');
+
+                // по окончании анимации удаляем из DOM
+                const onEnd = (ev) => {
+                    if (ev.target !== row) return; // ждём завершения именно у строки
+                    row.removeEventListener('transitionend', onEnd);
+                    if (row.parentNode) row.parentNode.removeChild(row);
+                    checkEmpty();
+                };
+                row.addEventListener('transitionend', onEnd, { once: true });
+
+                // защита на случай отсутствия transition (старые браузеры)
+                setTimeout(() => {
+                    if (row.isConnected) {
+                        row.removeEventListener('transitionend', onEnd);
+                        if (row.parentNode) row.parentNode.removeChild(row);
+                        checkEmpty();
+                    }
+                }, 1000);
+            });
+        }
+
+        try {
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': csrf || '',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'application/json'
+                },
+                credentials: 'same-origin'
+            });
+
+            if (res.status === 419) throw new Error('CSRF token mismatch (419)');
+            if (res.status === 405) throw new Error('Method not allowed (405)');
+            if (res.status === 302) throw new Error('Redirect (302)');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+
+            const data = await res.json(); // { success, id, is_favorite, count, ids }
+            if (!data || !data.success) throw new Error('Bad JSON');
+
+            const id = String(data.id);
+
+            // Обновляем все кнопки и бейдж
+            updateAllButtonsForId(id, !!data.is_favorite);
+            setBadge(Number(data.count) || 0);
+
+            // Если удалили из избранного и мы на странице избранного — убираем строку сразу
+            if (!data.is_favorite) {
+                removeWishlistRow(id);
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Не удалось выполнить операцию. Попробуйте ещё раз.');
+        } finally {
+            delete btn.dataset.loading;
+        }
+    });
+})();
+
+
+
+
+
 
