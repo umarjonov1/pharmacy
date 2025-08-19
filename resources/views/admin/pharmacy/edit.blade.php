@@ -32,6 +32,17 @@
                         <label for="exampleInputEmail1">Owner Pharmacy</label>
                         <input value="{{ $pharmacy->owner }}" name="owner" type="text" class="form-control" id="exampleInputEmail1">
                     </div>
+                    <div class="form-group">
+                        <label>Choose pharmacist</label>
+                        <select class="form-control select2" style="width: 100%;" name="pharmacist">
+                            @if ($pharmacy->pharmacist)
+                                <option value="{{ $pharmacy->pharmacist }}" selected>Name: {{ $pharmacy->pharmacistUser->name }} Email: {{ $pharmacy->pharmacistUser->email }}</option>
+                            @endif
+                            @foreach($pharmacists as $pharmacist)
+                                <option value="{{ $pharmacist->id }}">Name: {{ $pharmacist->name }} Email: {{ $pharmacist->email }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                    <div class="col-md-3">
                        <h3 class="title">Location of PHARMACY</h3>
 

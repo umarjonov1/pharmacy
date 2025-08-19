@@ -51,6 +51,14 @@
                         <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        <label>Choose pharmacist</label>
+                        <select class="form-control select2" style="width: 100%;" name="pharmacist">
+                            @foreach($pharmacists as $pharmacist)
+                                <option value="{{ $pharmacist->id }}">Name: {{ $pharmacist->name }} Email: {{ $pharmacist->email }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="col-md-3">
                         <h3 class="title">Location of PHARMACY</h3>
 
@@ -71,5 +79,4 @@
             </div>
         </form>
     </div>
-
 @endsection

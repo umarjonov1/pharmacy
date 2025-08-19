@@ -18,8 +18,8 @@ class PharmacyController extends Controller
 
     public function create()
     {
-
-        return view('admin.pharmacy.create');
+        $pharmacists = User::where('role', 2)->get();
+        return view('admin.pharmacy.create', compact('pharmacists'));
     }
 
     public function store(Request $request) {
@@ -27,6 +27,7 @@ class PharmacyController extends Controller
             'title' => 'required|string|max:255',
             'address' => 'required|string',
             'owner' => 'required|string',
+            'pharmacist' => 'required|numeric',
             'lat' => 'numeric',
             'lng' => 'numeric',
         ]);
@@ -45,7 +46,8 @@ class PharmacyController extends Controller
     public function edit(\App\Pharmacy $pharmacy)
     {
 
-        return view('admin.pharmacy.edit', compact('pharmacy'));
+        $pharmacists = (User::where('role', 2)->get());
+        return view('admin.pharmacy.edit', compact('pharmacy', 'pharmacists'));
     }
 
     public function update(Request $request, \App\Pharmacy $pharmacy)
@@ -54,6 +56,7 @@ class PharmacyController extends Controller
             'title' => 'required|string|max:255',
             'address' => 'required|string',
             'owner' => 'required|string',
+            'pharmacist' => 'nullable|numeric',
             'lat' => 'numeric',
             'lng' => 'numeric',
         ]);

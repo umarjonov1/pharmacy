@@ -39,6 +39,20 @@
         .wishlist-badge{display:inline-block;min-width:18px;padding:2px 6px;font-size:12px;line-height:1;border-radius:10px;background:#e60023;color:#fff;margin-left:6px;font-weight:600}
         .wishlist-toggle.is-in .label{font-weight:600}
     </style>
+
+    {{--    like--}}
+    <style>
+        .like-btn {
+            color: #aaa;
+            font-size: 22px;
+transition: 0.3s;
+        }
+
+        .like-btn.active {
+color: #007bff; /* синий когда лайкнуто */
+        }
+    </style>
+
 </head><!--/head-->
 
 <body>
@@ -63,5 +77,8 @@
 <script src="/public/extensions/js/price-range.js"></script>
 <script src="/public/extensions/js/jquery.prettyPhoto.js"></script>
 <script src="/public/extensions/js/main.js"></script>
+{{--like--}}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </body>
 </html>

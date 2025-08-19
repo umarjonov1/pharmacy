@@ -19,6 +19,7 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="/public/extensions/assets/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="/public/extensions/assets/plugins/select2/select2.min.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -473,6 +474,23 @@
 <script src="/public/extensions/assets/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/public/extensions/assets/dist/js/demo.js"></script>
+<!-- Select2 -->
+<script src="/public/extensions/assets/plugins/select2/select2.full.min.js"></script>
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $(".select2").select2();
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        });
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        });
+    });
+</script>
 </body>
 
 <!-- Mirrored from almsaeedstudio.com/themes/AdminLTE/pages/examples/blank.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 18 Dec 2016 15:13:35 GMT -->

@@ -291,8 +291,8 @@ $(function () {
             return;
         }
 
-        function checkEmpty(){
-            const list  = document.getElementById('wishlist-list');
+        function checkEmpty() {
+            const list = document.getElementById('wishlist-list');
             const empty = document.getElementById('wishlist-empty');
             if (!list || !empty) return;
             if (!list.querySelector('[data-wishlist-row]')) {
@@ -300,8 +300,8 @@ $(function () {
             }
         }
 
-        function removeWishlistRow(id){
-            const rows = document.querySelectorAll('[data-wishlist-row][data-id="'+id+'"]');
+        function removeWishlistRow(id) {
+            const rows = document.querySelectorAll('[data-wishlist-row][data-id="' + id + '"]');
             rows.forEach((row) => {
                 // запускаем fade-out
                 row.classList.add('is-removing');
@@ -313,7 +313,7 @@ $(function () {
                     if (row.parentNode) row.parentNode.removeChild(row);
                     checkEmpty();
                 };
-                row.addEventListener('transitionend', onEnd, { once: true });
+                row.addEventListener('transitionend', onEnd, {once: true});
 
                 // защита на случай отсутствия transition (старые браузеры)
                 setTimeout(() => {
@@ -364,7 +364,31 @@ $(function () {
     });
 })();
 
+// like
+$(document).on('click', '.like-btn', function (e) {
+    e.preventDefault();
 
+    let $btn = $(this);
+    let url = $btn.attr('href');
+
+    $.ajax({
+        url: url,
+        type: 'POST',
+        data: {
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+            if (response.liked) {
+                $btn.addClass('active');
+            } else {
+                $btn.removeClass('active');
+            }
+        },
+        error: function () {
+            alert("Ошибка при лайке");
+        }
+    });
+});
 
 
 

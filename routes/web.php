@@ -37,6 +37,9 @@ Route::group(['middleware' => ['auth', 'role:0,1']], function () {
         Route::get('/', 'IndexController@index')->name('wishlist.index');
         Route::post('/{medicine}/toggle', 'IndexController@toggle')->name('wishlist.toggle');
     });
+
+    // like medicine
+    Route::post('/{medicine}/like', [\App\Http\Controllers\Like\IndexController::class, 'like'])->name('like.medicine');
 });
 
 

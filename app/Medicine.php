@@ -24,4 +24,21 @@ class Medicine extends Model
     {
         return $this->hasMany(Comment::class)->oldest();
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+
+    public function getIsLikedAttribute(): bool
+    {
+        if (!auth()->check()) {
+            return false;
+        }
+
+        return $this->likes()
+            ->where('user_id', auth()->id())
+            ->where('is_liked', 1)
+            ->exists();
+    }
 }

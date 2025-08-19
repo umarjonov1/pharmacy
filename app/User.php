@@ -47,6 +47,10 @@ class User extends Authenticatable
         }
     }
 
+    public function pharmacist()
+    {
+        return $this->belongsTo(Pharmacy::class);
+    }
 
     /**
      * The attributes that are mass assignable.

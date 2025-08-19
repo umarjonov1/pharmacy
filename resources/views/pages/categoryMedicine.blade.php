@@ -49,24 +49,35 @@
                 <div class="tab-content">
                     <div class="tab-pane fade active in" id="tshirt">
                         @foreach($medicines as $medicine)
-                        <div class="col-sm-3">
-                            <div class="product-image-wrapper">
-                                <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <img src="/public/extensions/images/home/gallery4.jpg" alt=""/>
-                                        <h2>${{ $medicine->price }}</h2>
-                                        <p>{{ $medicine->title }}</p>
-{{--                                        <a href="" data-url="{{ route("cart.add", $medicine->id) }}" data-id="{{ $medicine->id }}"  class="btn btn-default add-to-cart"><i--}}
-{{--                                                class="fa fa-shopping-cart"></i>Add to cart</a>--}}
-                                        <a href="" data-url="{{ route('cart.add', $medicine) }}" data-id="{{ $medicine->id }}"
-                                           class="btn btn-default addCart">
-                                            <i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            <div class="col-sm-3">
+                                <div class="product-image-wrapper">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <a href="{{ route('pages.productDetails', $medicine->id) }}"><img
+                                                    src="/public/extensions/images/home/gallery4.jpg" alt=""/></a>
+                                            <h2>${{ $medicine->price }}</h2>
+                                            <p>{{ $medicine->title }}</p>
+                                            <a href="" data-url="{{ route('cart.add', $medicine) }}"
+                                               data-id="{{ $medicine->id }}"
+                                               class="btn btn-default addCart">
 
+                                                <i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                            <a href="{{ route('like.medicine', $medicine) }}"
+                                               class="like-btn {{ $medicine->is_liked ? 'active' : '' }}">
+                                                <i class="fa fa-thumbs-up"></i>
+                                            </a>
+                                        </div>
                                     </div>
-
+                                    <div class="choose">
+                                        <ul class="nav nav-pills nav-justified">
+                                            <li>@include('inc.partials.wishlist-button')
+                                            </li>
+                                            <li><a href="/public/extensions/#"><i class="fa fa-plus-square"></i>Add to compare</a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         @endforeach
                     </div>
                     {{ $medicines->links('pagination::bootstrap-4') }}
